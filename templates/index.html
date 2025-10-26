@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Smart Crop Advisor</title>
+  <!-- Import Inter Font for modern readability -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    /* 1. Global Reset & Typography */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      /* Catchy and easy-to-use gradient background */
+      background: linear-gradient(135deg, #d9f99d 0%, #16a34a 100%);
+      color: #333;
+      overflow-x: hidden;
+    }
+
+    /* 2. Main Container Card */
+    .container-card {
+      background: rgba(255, 255, 255, 0.95);
+      padding: 40px;
+      border-radius: 24px; /* Deep rounding */
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25); /* Deep, soft shadow */
+      width: 100%;
+      max-width: 500px;
+      transition: all 0.5s ease;
+      border-bottom: 5px solid #10b981; /* Primary color highlight */
+    }
+
+    .container-card:hover {
+        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.35); /* Interactive shadow */
+    }
+
+    /* 3. Header Styling */
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: #059669; /* Accent Green */
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #6b7280;
+      margin-bottom: 30px;
+      font-weight: 500;
+      font-size: 1rem;
+    }
+
+    /* 4. Form Layout (Responsive Grid) */
+    .input-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+    }
+
+    /* Ensure Rainfall input spans both columns */
+    .input-grid input[name="Rainfall"] {
+        grid-column: span 2;
+    }
+
+    /* 5. Input Field Styling */
+    .input-field {
+      width: 100%;
+      padding: 14px;
+      border: 2px solid #a7f3d0; /* Light green border */
+      border-radius: 12px;
+      outline: none;
+      transition: all 0.3s ease;
+      font-size: 1rem;
+      color: #374151;
+      font-weight: 500;
+    }
+
+    .input-field::placeholder {
+        color: #9ca3af;
+    }
+
+    .input-field:focus {
+      border-color: #10b981; /* Primary Green on focus */
+      box-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
+    }
+
+    /* 6. Button Styling */
+    .submit-button {
+      grid-column: span 2;
+      margin-top: 20px;
+      background: #059669; /* Accent Green */
+      color: white;
+      border: none;
+      border-radius: 12px;
+      padding: 15px;
+      font-size: 1.25rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 10px 20px rgba(5, 150, 105, 0.4);
+    }
+
+    .submit-button:hover {
+      background: #047857; /* Darker Green on Hover */
+      transform: translateY(-2px);
+      box-shadow: 0 15px 30px rgba(4, 120, 87, 0.5);
+    }
+
+    .submit-button:active {
+        transform: translateY(0);
+        box-shadow: 0 5px 10px rgba(4, 120, 87, 0.4);
+    }
+
+    /* 7. Result Box Styling */
+    .result-box {
+      margin-top: 30px;
+      padding: 25px;
+      border-radius: 16px;
+      background: #ecfdf5; /* Very light mint green */
+      color: #065f46;
+      text-align: center;
+      border: 2px dashed #10b981;
+      animation: slideIn 0.6s ease-out forwards;
+    }
+
+    .result-box strong {
+        font-size: 2.5rem;
+        color: #059669;
+        display: block;
+        margin-top: 5px;
+        font-weight: 800;
+    }
+
+    .result-box span {
+        font-size: 1.1rem;
+        font-weight: 600;
+        display: block;
+    }
+
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* 8. Footer */
+    .footer {
+      text-align: center;
+      font-size: 0.85rem;
+      color: #9ca3af;
+      margin-top: 40px;
+      padding-top: 20px;
+      border-top: 1px solid #e5e7eb;
+    }
+
+    .footer span {
+      font-weight: 700;
+      color: #059669;
+    }
+
+    /* 9. Responsiveness */
+    @media (max-width: 600px) {
+      .container-card {
+        padding: 25px;
+      }
+
+      h1 {
+        font-size: 1.8rem;
+        gap: 8px;
+      }
+
+      .input-grid {
+        grid-template-columns: 1fr; /* Stack inputs on small screens */
+      }
+
+      .input-grid input, .submit-button {
+          grid-column: span 1; /* Reset span for single column layout */
+      }
+
+      .result-box strong {
+          font-size: 2rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container-card">
+
+    <!-- Header Section with Icon -->
+    <h1 title="Smart Crop Advisor">
+      <!-- SVG Icon for Leaf/Plant -->
+      <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 20 4a2 2 0 0 0 1.92-1.6c-.34 2.89-.53 5.47-.53 5.47-2.3-3.26-4.26-5.83-7.5-6.8-1.52-.45-3.08-.68-4.7-.68a20 20 0 0 1-5.74 1.15c2.42 2.1 2.97 3.98 2.97 3.98s2.84 1.54 3.78 4.29-1.16 7.62-1.16 7.62c.7-.76 1.4-1.5 2.1-2.25z"/>
+        <path d="M12 13a4 4 0 0 0 4 4c.32 0 .54-.25.47-.7 0-1.84 0-4.07-.34-6.22-3.13 2.16-5.46 4.9-7.22 8.35a7 7 0 0 0 2.09 1.57"/>
+      </svg>
+      Smart Crop Advisor
+    </h1>
+
+    <p class="subtitle">Input your soil and climate data for the best crop recommendation.</p>
+
+    <!-- Prediction Form -->
+    <form action="{{ url_for('predict') }}" method="post" class="input-grid">
+
+      <input type="number" step="any" name="Nitrogen" placeholder="Nitrogen Level (N)" required
+             class="input-field" min="0" title="Nitrogen content in the soil">
+
+      <input type="number" step="any" name="Phosphorus" placeholder="Phosphorus Level (P)" required
+             class="input-field" min="0" title="Phosphorus content in the soil">
+
+      <input type="number" step="any" name="Potassium" placeholder="Potassium Level (K)" required
+             class="input-field" min="0" title="Potassium content in the soil">
+
+      <input type="number" step="any" name="Temperature" placeholder="Temperature (°C)" required
+             class="input-field" min="0" title="Average ambient temperature">
+
+      <input type="number" step="any" name="Humidity" placeholder="Humidity (%)" required
+             class="input-field" min="0" max="100" title="Relative humidity">
+
+      <input type="number" step="any" name="pH" placeholder="Soil pH" required
+             class="input-field" min="3" max="10" step="0.1" title="Soil acidity/alkalinity level">
+
+      <input type="number" step="any" name="Rainfall" placeholder="Rainfall (mm)" required
+             class="input-field" min="0" title="Average rainfall in mm">
+
+      <!-- Submit Button -->
+      <button type="submit" class="submit-button">
+        Get Recommendation
+      </button>
+    </form>
+
+    <!-- Prediction Result Display -->
+    {% if prediction_text %}
+      <div class="result-box">
+        <span>The best crop for your conditions is:</span>
+        <strong title="Recommended Crop">{{ prediction_text }}</strong>
+      </div>
+    {% endif %}
+
+    <!-- Footer -->
+    <div class="footer">
+      A Precision Agriculture Tool | Powered by <span>Crop</span>
+    </div>
+  </div>
+</body>
+</html>
